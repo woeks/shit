@@ -133,6 +133,8 @@ npm run build
 
 ## 10. 文档索引
 
-- 项目说明：[README.md](/Users/fanrulei/Documents/Playground/README.md)
-- 部署说明：[docs/DEPLOYMENT.md](/Users/fanrulei/Documents/Playground/docs/DEPLOYMENT.md)
-- 交付说明：[docs/DELIVERY.md](/Users/fanrulei/Documents/Playground/docs/DELIVERY.md)
+- 项目说明：[README.md](../README.md)
+- 部署总览：[DEPLOYMENT.md](DEPLOYMENT.md)
+- Docker 部署手册：[DOCKER_DEPLOY.md](DOCKER_DEPLOY.md)
+- 源码部署手册：[SOURCE_DEPLOY.md](SOURCE_DEPLOY.md)
+- 交付说明：[DELIVERY.md](DELIVERY.md)

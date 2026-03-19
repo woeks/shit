@@ -2,68 +2,94 @@
 
 一个基于 `Vue 3 + Vite + Element Plus` 和 `Express + Sequelize + PostgreSQL` 的招聘管理系统，覆盖岗位管理、简历处理、复筛、面试安排、Offer、人才库、权限和报表等核心流程。
 
+## 功能概览
+
+- 岗位管理
+- 简历库与简历解析
+- 初筛、复筛、面试流程协同
+- Offer 管理
+- 人才库管理
+- 人员权限管理
+- 邮箱同步
+- 统计报表
+
 ## 项目结构
 
 ```text
 .
-├── recruitment-frontend/   # 前端
-├── recruitment-backend/    # 后端
-└── docs/                   # 部署与发布说明
+├── recruitment-frontend/   # 前端项目
+├── recruitment-backend/    # 后端项目
+├── docs/                   # 部署与交付文档
+├── docker-compose.yml
+├── docker-compose.prod.yml
+└── .env.docker.example
 ```
 
-## 当前整理内容
+## 已完成整理
 
-- 已移除仓库内用于插入演示/测试数据的脚本
+- 已移除测试数据插入脚本
 - 前端登录页不再展示或预填测试账号
-- 后端不再内置演示账号或测试密码
-- logo 已恢复为默认 Vite logo
+- 后端不再内置测试账号和测试密码
+- 已补齐 Docker 部署文件
+- 已补齐源码部署文档、Docker 部署文档和交付说明
 
-如需在首次部署时自动创建管理员，请显式提供管理员初始化环境变量：
+## 两种部署方式
+
+### 1. Docker 一键部署
+
+适合快速上线和服务器部署，推荐优先使用。
 
 ```bash
-BOOTSTRAP_ADMIN_USERNAME=admin
-BOOTSTRAP_ADMIN_PASSWORD=your_strong_password
+cp .env.docker.example .env.docker
+docker compose -f docker-compose.prod.yml --env-file .env.docker up -d --build
 ```
 
-## 环境要求
+详细文档：
 
-- Node.js 20+
-- PostgreSQL 14+
+- [Docker 部署手册](docs/DOCKER_DEPLOY.md)
 
-## 后端启动
+### 2. 源码部署
 
-1. 复制环境变量模板：
+适合已有 Node.js / PostgreSQL 环境，或者需要自行拆分前后端部署的场景。
+
+后端：
 
 ```bash
 cd recruitment-backend
 cp .env.example .env
+npm install --omit=dev
+npm run start
 ```
 
-2. 按实际环境修改 `.env`
-
-```env
-DB_HOST=localhost
-DB_USER=postgres
-DB_PASSWORD=your_password
-DB_NAME=recruitment_db
-DB_DIALECT=postgres
-PORT=3000
-JWT_SECRET=change_this_to_a_strong_random_secret
-ENABLE_STARTUP_BACKFILL=false
-BOOTSTRAP_ADMIN_USERNAME=
-BOOTSTRAP_ADMIN_PASSWORD=
-BOOTSTRAP_ADMIN_NAME=
-BOOTSTRAP_ADMIN_EMAIL=
-```
-
-3. 安装并启动：
+前端：
 
 ```bash
+cd recruitment-frontend
+npm install
+npm run build
+```
+
+详细文档：
+
+- [源码部署手册](docs/SOURCE_DEPLOY.md)
+
+## 本地开发
+
+环境要求：
+
+- Node.js 20+
+- PostgreSQL 14+
+
+后端开发启动：
+
+```bash
+cd recruitment-backend
+cp .env.example .env
 npm install
 npm run start
 ```
 
-## 前端启动
+前端开发启动：
 
 ```bash
 cd recruitment-frontend
@@ -76,61 +102,15 @@ npm run dev
 - 前端：`http://localhost:5173`
 - 后端：`http://localhost:3000`
 
-## 生产构建
+## 文档索引
 
-前端：
+- [部署总览](docs/DEPLOYMENT.md)
+- [Docker 部署手册](docs/DOCKER_DEPLOY.md)
+- [源码部署手册](docs/SOURCE_DEPLOY.md)
+- [交付说明](docs/DELIVERY.md)
 
-```bash
-cd recruitment-frontend
-npm install
-npm run build
-```
+## 发布说明
 
-后端：
-
-```bash
-cd recruitment-backend
-npm install --omit=dev
-npm run start
-```
-
-## Docker 启动
-
-项目已经补好 Docker 镜像定义和 `docker-compose.yml`，可直接在仓库根目录启动：
-
-```bash
-docker compose up -d --build
-```
-
-默认访问地址：
-
-- 前端：`http://localhost:8080`
-- 后端健康检查：`http://localhost:8080/api/health`
-
-首次启动前建议先修改 [docker-compose.yml](/Users/fanrulei/Documents/Playground/docker-compose.yml) 里的这些默认值：
-
-- `POSTGRES_PASSWORD`
-- `JWT_SECRET`
-- `BOOTSTRAP_ADMIN_USERNAME`
-- `BOOTSTRAP_ADMIN_PASSWORD`
-- `BOOTSTRAP_ADMIN_EMAIL`
-
-停止：
-
-```bash
-docker compose down
-```
-
-如果需要生产环境参数化部署，使用 [docker-compose.prod.yml](/Users/fanrulei/Documents/Playground/docker-compose.prod.yml) 和 [/.env.docker.example](/Users/fanrulei/Documents/Playground/.env.docker.example)。
-
-完整 Docker 上线手册见 [docs/DOCKER_DEPLOY.md](/Users/fanrulei/Documents/Playground/docs/DOCKER_DEPLOY.md)。
-
-## 发布建议
-
-- GitHub 仓库只提交源码、锁文件、文档和必要静态资源
-- 不提交 `node_modules`、构建产物、真实 `.env`、本地上传文件和临时压缩包
-- 首次生产部署时先通过环境变量或后台人工创建正式管理员账号，再开放系统使用
-
-详细部署说明见 [docs/DEPLOYMENT.md](/Users/fanrulei/Documents/Playground/docs/DEPLOYMENT.md)。
-
-正式交付与上线说明见 [docs/DELIVERY.md](/Users/fanrulei/Documents/Playground/docs/DELIVERY.md)。
+- GitHub 仓库只提交源码、锁文件、部署文件和说明文档
+- 不提交 `node_modules`、`dist`、真实 `.env`、上传文件和临时压缩包
+- 首次上线请先修改数据库密码、JWT 密钥和管理员初始密码

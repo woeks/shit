@@ -6,11 +6,11 @@
 
 仓库中已经提供：
 
-- [docker-compose.yml](/Users/fanrulei/Documents/Playground/docker-compose.yml)
-- [docker-compose.prod.yml](/Users/fanrulei/Documents/Playground/docker-compose.prod.yml)
-- [recruitment-backend/Dockerfile](/Users/fanrulei/Documents/Playground/recruitment-backend/Dockerfile)
-- [recruitment-frontend/Dockerfile](/Users/fanrulei/Documents/Playground/recruitment-frontend/Dockerfile)
-- [/.env.docker.example](/Users/fanrulei/Documents/Playground/.env.docker.example)
+- [`../docker-compose.yml`](../docker-compose.yml)
+- [`../docker-compose.prod.yml`](../docker-compose.prod.yml)
+- [`../recruitment-backend/Dockerfile`](../recruitment-backend/Dockerfile)
+- [`../recruitment-frontend/Dockerfile`](../recruitment-frontend/Dockerfile)
+- [`../.env.docker.example`](../.env.docker.example)
 
 ## 2. 准备环境
 

@@ -1,136 +1,51 @@
-# 部署说明
+# 部署总览
 
-## 1. 代码准备
+当前项目支持两种部署方式：
 
-建议仓库只包含以下内容：
+## 1. Docker 一键部署
 
-- `recruitment-frontend/`
-- `recruitment-backend/`
-- `README.md`
-- `docs/`
+适用场景：
 
-不建议提交：
+- 希望快速上线
+- 服务器环境干净，准备直接容器化部署
+- 希望前端、后端、数据库一起启动
 
-- `node_modules/`
-- `dist/`
-- `.env`
-- `uploads/` 中的真实文件
-- 本地测试脚本
-- 临时压缩包
+推荐文件：
 
-## 2. 后端部署
+- [`../docker-compose.prod.yml`](../docker-compose.prod.yml)
+- [`../.env.docker.example`](../.env.docker.example)
+- [Docker 部署手册](DOCKER_DEPLOY.md)
+
+启动命令：
 
 ```bash
-cd recruitment-backend
-npm install --omit=dev
-cp .env.example .env
+cp .env.docker.example .env.docker
+docker compose -f docker-compose.prod.yml --env-file .env.docker up -d --build
 ```
 
-推荐环境变量：
+## 2. 源码部署
 
-```env
-DB_HOST=your-db-host
-DB_USER=your-db-user
-DB_PASSWORD=your-db-password
-DB_NAME=your-db-name
-DB_DIALECT=postgres
-PORT=3000
-JWT_SECRET=replace-with-a-strong-random-secret
-ENABLE_STARTUP_BACKFILL=false
-BOOTSTRAP_ADMIN_USERNAME=admin
-BOOTSTRAP_ADMIN_PASSWORD=your-strong-password
-BOOTSTRAP_ADMIN_NAME=系统管理员
-BOOTSTRAP_ADMIN_EMAIL=admin@example.com
-```
+适用场景：
 
-启动：
+- 服务器上已有 Node.js 和 PostgreSQL
+- 需要将前端静态文件与后端服务分开部署
+- 需要自行接入现有 Nginx、PM2 或其他运维体系
 
-```bash
-npm run start
-```
+推荐文档：
 
-## 3. 前端部署
+- [源码部署手册](SOURCE_DEPLOY.md)
 
-```bash
-cd recruitment-frontend
-npm install
-npm run build
-```
+## 3. 如何选择
 
-将 `recruitment-frontend/dist/` 部署到静态站点服务或 Nginx。
+- 想省事、上线快：选 Docker 一键部署
+- 想细粒度控制服务结构：选源码部署
 
-## 3.1 Docker Compose 快速部署
+## 4. 上线前统一检查
 
-仓库根目录已经提供 [docker-compose.yml](/Users/fanrulei/Documents/Playground/docker-compose.yml)，包含：
+无论哪种方式，上线前都建议确认：
 
-- `postgres`
-- `backend`
-- `frontend`
-
-启动：
-
-```bash
-docker compose up -d --build
-```
-
-默认访问：
-
-- 前端：`http://localhost:8080`
-- 健康检查：`http://localhost:8080/api/health`
-
-建议上线前修改 `docker-compose.yml` 中的默认数据库密码、JWT 密钥和管理员初始化密码。
-
-停止：
-
-```bash
-docker compose down
-```
-
-如果是生产环境，建议改用 [docker-compose.prod.yml](/Users/fanrulei/Documents/Playground/docker-compose.prod.yml) 配合 [/.env.docker.example](/Users/fanrulei/Documents/Playground/.env.docker.example)。
-
-完整步骤见 [docs/DOCKER_DEPLOY.md](/Users/fanrulei/Documents/Playground/docs/DOCKER_DEPLOY.md)。
-
-## 4. Nginx 示例
-
-```nginx
-server {
-  listen 80;
-  server_name your-domain.com;
-
-  root /var/www/recruitment-frontend/dist;
-  index index.html;
-
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
-
-  location /api/ {
-    proxy_pass http://127.0.0.1:3000;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  }
-
-  location /uploads/ {
-    proxy_pass http://127.0.0.1:3000;
-  }
-}
-```
-
-## 5. GitHub 发布建议
-
-标准流程建议：
-
-1. 初始化并整理仓库内容
-2. 编写 `README.md` 与部署文档
-3. 本地构建验证
-4. 推送到 GitHub 主分支
-5. 如需版本发布，再创建 GitHub Release
-
-## 6. 上线前检查
-
-- 数据库连接信息已替换为生产配置
-- 仓库内未保留默认测试账号和测试密码
-- 前端已使用生产构建产物
-- 域名、反向代理和上传目录权限已配置完成
+- 数据库密码已替换
+- `JWT_SECRET` 已替换为强随机字符串
+- 管理员初始账号和密码已修改
+- 仓库内未使用任何测试账号或测试密码
+- 域名、端口、反向代理策略已确认
