@@ -1,11 +1,9 @@
 const runtimeApiBaseUrl = (() => {
   if (typeof window === 'undefined') {
-    return 'http://localhost:3000';
+    return '/api';
   }
 
-  const { protocol, hostname } = window.location;
-  return `${protocol}//${hostname}:3000`;
+  return '/api';
 })();
 
 export const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || runtimeApiBaseUrl;
-

@@ -59,6 +59,33 @@ npm run build
 
 将 `recruitment-frontend/dist/` 部署到静态站点服务或 Nginx。
 
+## 3.1 Docker Compose 快速部署
+
+仓库根目录已经提供 [docker-compose.yml](/Users/fanrulei/Documents/Playground/docker-compose.yml)，包含：
+
+- `postgres`
+- `backend`
+- `frontend`
+
+启动：
+
+```bash
+docker compose up -d --build
+```
+
+默认访问：
+
+- 前端：`http://localhost:8080`
+- 健康检查：`http://localhost:8080/api/health`
+
+建议上线前修改 `docker-compose.yml` 中的默认数据库密码、JWT 密钥和管理员初始化密码。
+
+停止：
+
+```bash
+docker compose down
+```
+
 ## 4. Nginx 示例
 
 ```nginx

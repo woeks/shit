@@ -94,6 +94,33 @@ npm install --omit=dev
 npm run start
 ```
 
+## Docker 启动
+
+项目已经补好 Docker 镜像定义和 `docker-compose.yml`，可直接在仓库根目录启动：
+
+```bash
+docker compose up -d --build
+```
+
+默认访问地址：
+
+- 前端：`http://localhost:8080`
+- 后端健康检查：`http://localhost:8080/api/health`
+
+首次启动前建议先修改 [docker-compose.yml](/Users/fanrulei/Documents/Playground/docker-compose.yml) 里的这些默认值：
+
+- `POSTGRES_PASSWORD`
+- `JWT_SECRET`
+- `BOOTSTRAP_ADMIN_USERNAME`
+- `BOOTSTRAP_ADMIN_PASSWORD`
+- `BOOTSTRAP_ADMIN_EMAIL`
+
+停止：
+
+```bash
+docker compose down
+```
+
 ## 发布建议
 
 - GitHub 仓库只提交源码、锁文件、文档和必要静态资源
