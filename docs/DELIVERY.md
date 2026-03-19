@@ -4,7 +4,7 @@
 
 - 项目名称：招聘管理系统
 - 技术栈：Vue 3、Vite、Element Plus、Express、Sequelize、PostgreSQL
-- GitHub 仓库：[https://github.com/woeks/shit](https://github.com/woeks/shit)
+- GitHub 仓库：[https://github.com/woeks/recruitment-system](https://github.com/woeks/recruitment-system)
 - 当前发布标签：`v1.0.0`
 
 ## 2. 本次交付范围

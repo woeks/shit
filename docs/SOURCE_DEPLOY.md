@@ -19,8 +19,8 @@
 ## 3. 拉取代码
 
 ```bash
-git clone https://github.com/woeks/shit.git
-cd shit
+git clone https://github.com/woeks/recruitment-system.git
+cd recruitment-system
 ```
 
 ## 4. 后端部署
