@@ -101,3 +101,5 @@ npm run start
 - 首次生产部署时先通过环境变量或后台人工创建正式管理员账号，再开放系统使用
 
 详细部署说明见 [docs/DEPLOYMENT.md](/Users/fanrulei/Documents/Playground/docs/DEPLOYMENT.md)。
+
+正式交付与上线说明见 [docs/DELIVERY.md](/Users/fanrulei/Documents/Playground/docs/DELIVERY.md)。
