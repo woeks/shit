@@ -121,6 +121,10 @@ docker compose up -d --build
 docker compose down
 ```
 
+如果需要生产环境参数化部署，使用 [docker-compose.prod.yml](/Users/fanrulei/Documents/Playground/docker-compose.prod.yml) 和 [/.env.docker.example](/Users/fanrulei/Documents/Playground/.env.docker.example)。
+
+完整 Docker 上线手册见 [docs/DOCKER_DEPLOY.md](/Users/fanrulei/Documents/Playground/docs/DOCKER_DEPLOY.md)。
+
 ## 发布建议
 
 - GitHub 仓库只提交源码、锁文件、文档和必要静态资源

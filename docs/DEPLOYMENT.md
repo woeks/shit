@@ -86,6 +86,10 @@ docker compose up -d --build
 docker compose down
 ```
 
+如果是生产环境，建议改用 [docker-compose.prod.yml](/Users/fanrulei/Documents/Playground/docker-compose.prod.yml) 配合 [/.env.docker.example](/Users/fanrulei/Documents/Playground/.env.docker.example)。
+
+完整步骤见 [docs/DOCKER_DEPLOY.md](/Users/fanrulei/Documents/Playground/docs/DOCKER_DEPLOY.md)。
+
 ## 4. Nginx 示例
 
 ```nginx
