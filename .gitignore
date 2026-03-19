@@ -1,0 +1,10 @@
+**/node_modules/
+**/dist/
+.DS_Store
+.env
+*.local
+*.log
+*.tar.gz
+uploads/
+recruitment-backend/uploads/resumes/*
+!recruitment-backend/uploads/resumes/.gitkeep
